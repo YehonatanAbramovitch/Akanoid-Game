@@ -20,18 +20,18 @@ The code is organized into packages with a single responsibility each:
 
 | Package | Responsibility |
 |---|---|
-| `GameMain` | `Game` — builds the level and runs the 60 FPS animation loop |
+| `GameMain` | `Game` - builds the level and runs the 60 FPS animation loop |
 | `Objects` | `Sprite` and `Collidable` interfaces; `Ball`, `Block`, `Paddle`, `SpriteCollection`, `GameEnvironment` |
 | `GameUpdating` | Game rules as hit listeners: `BlockRemover`, `BallRemover`, `ScoreTrackingListener`, `ScoreIndicator` |
 | `MovingAndMechanics` | `Velocity`, `CollisionInfo`, `Counter`, and the `HitNotifier` / `HitListener` interfaces |
-| `GeometricPrimitives` | `Point`, `Line`, `Rectangle` — intersections and geometry |
+| `GeometricPrimitives` | `Point`, `Line`, `Rectangle` - intersections and geometry |
 
 **Patterns and techniques**
 
-- **Interfaces over concrete types** — the game loop only knows about `Sprite` and `Collidable`, so new kinds of objects can be added without changing it.
-- **Observer pattern** — blocks notify `HitListener`s when hit; removing blocks, removing balls and scoring are separate listeners rather than logic inside `Ball` or `Block`.
-- **Continuous collision detection** — each frame, the ball's movement is a line segment; the closest intersection with any collidable is found and the ball is placed just before it, so fast balls never pass through blocks.
-- **Safe iteration** — sprites and listeners are iterated over copies of their lists, so objects can remove themselves during a hit event.
+- **Interfaces over concrete types** - the game loop only knows about `Sprite` and `Collidable`, so new kinds of objects can be added without changing it.
+- **Observer pattern** - blocks notify `HitListener`s when hit; removing blocks, removing balls and scoring are separate listeners rather than logic inside `Ball` or `Block`.
+- **Continuous collision detection** - each frame, the ball's movement is a line segment; the closest intersection with any collidable is found and the ball is placed just before it, so fast balls never pass through blocks.
+- **Safe iteration** - sprites and listeners are iterated over copies of their lists, so objects can remove themselves during a hit event.
 
 ## Screenshots
 
@@ -53,4 +53,4 @@ Other targets: `ant compile` builds the classes into `bin/`, and `ant clean` rem
 
 ## Author
 
-**Yehonatan Abramovitch** — [Portfolio](https://yehonatanabramovitch.github.io) · [LinkedIn](https://www.linkedin.com/in/yehonatan-abramovitch)
+**Yehonatan Abramovitch** - [Portfolio](https://yehonatanabramovitch.github.io) · [LinkedIn](https://www.linkedin.com/in/yehonatan-abramovitch)
