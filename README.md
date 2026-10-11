@@ -12,7 +12,7 @@ Break all the blocks with the balls while keeping them in play with your paddle.
 - A pyramid of colored blocks that disappear when hit
 - Live score indicator, with a bonus for clearing the level
 - The game ends when all blocks are cleared or all balls are lost
-- Smooth, fixed **60 FPS** game loop
+- Game loop targeting **60 FPS**
 
 ## Design
 
@@ -20,7 +20,7 @@ The code is organized into packages with a single responsibility each:
 
 | Package | Responsibility |
 |---|---|
-| `GameMain` | `Game` - builds the level and runs the 60 FPS animation loop |
+| `GameMain` | `Game` - builds the level and runs the animation loop (targeting 60 FPS) |
 | `Objects` | `Sprite` and `Collidable` interfaces; `Ball`, `Block`, `Paddle`, `SpriteCollection`, `GameEnvironment` |
 | `GameUpdating` | Game rules as hit listeners: `BlockRemover`, `BallRemover`, `ScoreTrackingListener`, `ScoreIndicator` |
 | `MovingAndMechanics` | `Velocity`, `CollisionInfo`, `Counter`, and the `HitNotifier` / `HitListener` interfaces |
@@ -30,7 +30,7 @@ The code is organized into packages with a single responsibility each:
 
 - **Interfaces over concrete types** - the game loop only knows about `Sprite` and `Collidable`, so new kinds of objects can be added without changing it.
 - **Observer pattern** - blocks notify `HitListener`s when hit; removing blocks, removing balls and scoring are separate listeners rather than logic inside `Ball` or `Block`.
-- **Continuous collision detection** - each frame, the ball's movement is a line segment; the closest intersection with any collidable is found and the ball is placed just before it, so fast balls never pass through blocks.
+- **Continuous collision detection** - each frame, the ball's movement is a line segment; the closest intersection with any collidable is found and the ball is placed just before it. This greatly reduces fast balls slipping through thin blocks, compared with checking only the ball's final position.
 - **Safe iteration** - sprites and listeners are iterated over copies of their lists, so objects can remove themselves during a hit event.
 
 ## Screenshots
